@@ -1,0 +1,22 @@
+repos:
+- repo: local
+  hooks:
+  - id: go-build
+    name: go-build
+    language: system
+    entry: make build
+  - id: go-test
+    name: go-test
+    language: system
+    entry: make test
+
+- repo: https://github.com/tekwizely/pre-commit-golang
+  rev: v0.8.3
+  hooks:
+  - id: go-fmt
+
+- repo: https://github.com/commitizen-tools/commitizen
+  rev: v2.17.11
+  hooks:
+  - id: commitizen
+    stages: [commit-msg]
