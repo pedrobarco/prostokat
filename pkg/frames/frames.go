@@ -1,8 +1,6 @@
 package frames
 
 import (
-	"log"
-
 	"github.com/BurntSushi/xgbutil/xprop"
 	"github.com/BurntSushi/xgbutil/xwindow"
 )
@@ -16,7 +14,7 @@ func WindowFrames(win *xwindow.Window) *Frame {
 	if err != nil {
 		prop, err = xprop.GetProperty(win.X, win.Id, "_NET_FRAME_EXTENTS")
 		if err != nil {
-			log.Fatal(err)
+			return &Frame{0, 0, 0, 0}
 		}
 	}
 	return &Frame{
