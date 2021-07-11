@@ -1,4 +1,3 @@
-
 <h1 align="center">
   Prostokat
 </h1>
@@ -61,7 +60,7 @@ $ make build
 $ ./bin/prostokat
 ```
 
-## Download (WIP)
+## Download
 
 You can [download](https://github.com/pedrobarco/prostokat/releases) the latest installable version of Prostokat for GNU/Linux distros.
 
@@ -86,6 +85,6 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 
 ---
 
-> [pedrobarco.github.io](https://www.pedrobarco.github.io) &nbsp;&middot;&nbsp;
+> [pedrobarco.github.io](https://pedrobarco.github.io) &nbsp;&middot;&nbsp;
 > GitHub [@pedrobarco](https://github.com/pedrobarco)
 
