@@ -35,7 +35,7 @@
 ## Key Features
 
 - [x] Tile by grid (`n` rows * `m` columns)
-- [ ] Tile by layout in grid
+- [x] Tile by layout in grid
 - [x] Tile by mousebind
 - [ ] Tile by snapping areas
 - [x] No dependencies, just a binary
