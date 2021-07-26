@@ -1,7 +1,7 @@
 BINDIR      := $(CURDIR)/bin
 INSTALL_PATH ?= /usr/local/bin
 DIST_DIRS   := find * -type d -exec
-BINNAME     ?= prostokat
+BINNAME     ?= pk
 
 GOBIN         = $(shell go env GOBIN)
 ifeq ($(GOBIN),)
@@ -31,7 +31,7 @@ GIT_TAG    = $(shell git describe --tags --abbrev=0 --exact-match 2>/dev/null)
 GIT_DIRTY  = $(shell test -n "`git status --porcelain`" && echo "dirty" || echo "clean")
 
 # version
-VERSION    = 0.0.1
+VERSION    = 0.1.0
 
 all: build
 
@@ -41,7 +41,7 @@ all: build
 build: $(BINDIR)/$(BINNAME)
 
 $(BINDIR)/$(BINNAME): $(SRC)
-	GO111MODULE=on go build $(GOFLAGS) -o '$(BINDIR)'/$(BINNAME) ./cmd/prostokat
+	GO111MODULE=on go build $(GOFLAGS) -o '$(BINDIR)'/$(BINNAME) ./cmd/pk
 
 # ------------------------------------------------------------------------------
 #  install

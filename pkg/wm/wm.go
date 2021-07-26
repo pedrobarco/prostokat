@@ -16,7 +16,6 @@ import (
 type WM struct {
 	X         *xgbutil.XUtil
 	Grid      *grid.Grid
-	Layout    []*grid.Grid
 	Mousebind string
 }
 
@@ -25,8 +24,7 @@ func (wm *WM) config() string {
 	btnStr := strings.Split(wm.Mousebind, "-")
 
 	fmt.Fprintln(&b, "= Prostokat WM =")
-	fmt.Fprintf(&b, "Grid: %dx%d\n", wm.Grid.Cols(), wm.Grid.Rows())
-	fmt.Fprintf(&b, "Layouts: %v\n", wm.Layout)
+	fmt.Fprintf(&b, wm.Grid.String())
 	fmt.Fprintf(&b, "Mousebind: %s-Mouse%s\n", btnStr[0], btnStr[1])
 
 	return b.String()
@@ -37,7 +35,7 @@ func (wm *WM) Init() {
 
 	mousebind.Initialize(wm.X)
 
-	// Snapping with mousebind
+	// Tilling with mousebind
 	cb1 := mousebind.ButtonPressFun(
 		func(xu *xgbutil.XUtil, ev xevent.ButtonPressEvent) {
 			mx, my := int(ev.RootX), int(ev.RootY)
@@ -81,7 +79,6 @@ func (wm *WM) tileByMPos(mx, my int) {
 		log.Fatalf("tileByMPos: could not get closest area: %s\n", err)
 	}
 
-	// DONE: tile window
 	w := xwindow.New(wm.X, xwin)
 	Tile(w, a)
 }
