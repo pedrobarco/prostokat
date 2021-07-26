@@ -38,13 +38,28 @@ var startCmd = &cobra.Command{
 			panic(fmt.Errorf("Fatal error creating X conn: %s \n", err))
 		}
 
-		g := grid.Create(viper.GetInt("cols"), viper.GetInt("rows"))
+		var (
+			cols, rows int
+			l          grid.Layout
+		)
 
-		var l grid.Layout
+		if viper.IsSet("cols") {
+			cols = viper.GetInt("cols")
+		} else {
+			cols = pcfg.Grid.Cols
+		}
+
+		if viper.IsSet("rows") {
+			rows = viper.GetInt("rows")
+		} else {
+			rows = pcfg.Grid.Rows
+		}
+
 		for _, a := range pcfg.Layouts {
 			l = append(l, &areas.Area{X: a.Posx, Y: a.Posy, W: a.Width, H: a.Height})
 		}
 
+		g := grid.Create(cols, rows)
 		err = g.CreateLayout(l)
 		if err != nil {
 			panic(fmt.Errorf("Fatal error parsing layouts: %s \n", err))

@@ -1,7 +1,7 @@
 BINDIR      := $(CURDIR)/bin
 INSTALL_PATH ?= /usr/local/bin
 DIST_DIRS   := find * -type d -exec
-BINNAME     ?= prostokat
+BINNAME     ?= pk
 
 GOBIN         = $(shell go env GOBIN)
 ifeq ($(GOBIN),)
@@ -41,7 +41,7 @@ all: build
 build: $(BINDIR)/$(BINNAME)
 
 $(BINDIR)/$(BINNAME): $(SRC)
-	GO111MODULE=on go build $(GOFLAGS) -o '$(BINDIR)'/$(BINNAME) ./cmd/prostokat
+	GO111MODULE=on go build $(GOFLAGS) -o '$(BINDIR)'/$(BINNAME) ./cmd/pk
 
 # ------------------------------------------------------------------------------
 #  install
