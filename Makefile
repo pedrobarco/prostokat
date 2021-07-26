@@ -31,7 +31,7 @@ GIT_TAG    = $(shell git describe --tags --abbrev=0 --exact-match 2>/dev/null)
 GIT_DIRTY  = $(shell test -n "`git status --porcelain`" && echo "dirty" || echo "clean")
 
 # version
-VERSION    = 0.1.0
+VERSION    = 0.1.1
 
 all: build
 
