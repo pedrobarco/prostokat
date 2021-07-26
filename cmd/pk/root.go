@@ -13,7 +13,7 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Version: "0.1.0",
+	Version: "0.1.1",
 	Use:     "pk",
 	Short:   "A polished GNU/Linux tilling utility",
 	Long: `Prostokat is a minimal tilling utility built in Go.
