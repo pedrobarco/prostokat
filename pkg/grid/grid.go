@@ -8,7 +8,7 @@ import (
 	"github.com/BurntSushi/xgbutil"
 )
 
-type Layout = []areas.Area
+type Layout = []*areas.Area
 
 type Grid struct {
 	cols, rows int
@@ -38,7 +38,7 @@ func (g *Grid) MaxAreas() int {
 	return g.cols * g.rows
 }
 
-func (g *Grid) CreateLayout(arr []areas.Area) error {
+func (g *Grid) CreateLayout(arr []*areas.Area) error {
 	var (
 		maxCols = g.cols
 		maxRows = g.rows
@@ -107,13 +107,13 @@ func (g *Grid) Layout(xu *xgbutil.XUtil) Layout {
 		dh = wma.H / m
 	)
 
-	a := []areas.Area{}
+	a := []*areas.Area{}
 	for i := 0; i < n; i++ {
 		x := dx + (dw * i)
 		for j := 0; j < m; j++ {
 			y := dy + (dh * j)
 			ta := areas.Area{X: x, Y: y, W: dw, H: dh}
-			a = append(a, ta)
+			a = append(a, &ta)
 		}
 	}
 	return a

@@ -56,11 +56,14 @@ $ cd prostokat
 # Build the app
 $ make build
 
+# Install it globally
+$ sudo make install
+
 # Run the app
-$ ./bin/prostokat
+$ pk help
 ```
 
-## Download
+## Download (WIP)
 
 You can [download](https://github.com/pedrobarco/prostokat/releases) the latest installable version of Prostokat for GNU/Linux distros.
 

@@ -37,14 +37,14 @@ func TestGrid(t *testing.T) {
 func TestLayout(t *testing.T) {
 	samples := []struct {
 		grid    *Grid
-		layout  []areas.Area
+		layout  []*areas.Area
 		success bool
 	}{
-		{grid: Create(1, 1), layout: []areas.Area{{X: 0, Y: 0, W: 1, H: 1}}, success: true},
-		{grid: Create(1, 1), layout: []areas.Area{{X: 0, Y: 0, W: 2, H: 1}}, success: false},
-		{grid: Create(2, 1), layout: []areas.Area{{X: 0, Y: 0, W: 2, H: 1}}, success: true},
-		{grid: Create(2, 1), layout: []areas.Area{{X: 1, Y: 0, W: 2, H: 1}}, success: false},
-		{grid: Create(4, 1), layout: []areas.Area{{X: 0, Y: 0, W: 1, H: 1}, {X: 1, Y: 0, W: 2, H: 1}, {X: 3, Y: 0, W: 1, H: 1}}, success: true},
+		{grid: Create(1, 1), layout: []*areas.Area{{X: 0, Y: 0, W: 1, H: 1}}, success: true},
+		{grid: Create(1, 1), layout: []*areas.Area{{X: 0, Y: 0, W: 2, H: 1}}, success: false},
+		{grid: Create(2, 1), layout: []*areas.Area{{X: 0, Y: 0, W: 2, H: 1}}, success: true},
+		{grid: Create(2, 1), layout: []*areas.Area{{X: 1, Y: 0, W: 2, H: 1}}, success: false},
+		{grid: Create(4, 1), layout: []*areas.Area{{X: 0, Y: 0, W: 1, H: 1}, {X: 1, Y: 0, W: 2, H: 1}, {X: 3, Y: 0, W: 1, H: 1}}, success: true},
 	}
 
 	for _, s := range samples {
