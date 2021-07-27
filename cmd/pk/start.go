@@ -38,23 +38,15 @@ var startCmd = &cobra.Command{
 			panic(fmt.Errorf("Fatal error creating X conn: %s \n", err))
 		}
 
-		var (
-			cols, rows int
-			l          grid.Layout
-		)
-
-		if viper.IsSet("cols") {
-			cols = viper.GetInt("cols")
-		} else {
-			cols = pcfg.Grid.Cols
+		if viper.IsSet("profile") {
+			profile := viper.GetString("profile")
+			loadProfile(profile)
 		}
 
-		if viper.IsSet("rows") {
-			rows = viper.GetInt("rows")
-		} else {
-			rows = pcfg.Grid.Rows
-		}
+		cols := pcfg.Grid.Cols
+		rows := pcfg.Grid.Rows
 
+		var l grid.Layout
 		for _, a := range pcfg.Layouts {
 			l = append(l, &areas.Area{X: a.Posx, Y: a.Posy, W: a.Width, H: a.Height})
 		}
@@ -76,9 +68,6 @@ var startCmd = &cobra.Command{
 }
 
 func init() {
-	startCmd.Flags().IntP("cols", "c", pcfg.Grid.Cols, "Columns for tilling grid")
-	viper.BindPFlag("cols", startCmd.Flags().Lookup("cols"))
-
-	startCmd.Flags().IntP("rows", "r", pcfg.Grid.Rows, "Rows for tilling grid")
-	viper.BindPFlag("rows", startCmd.Flags().Lookup("rows"))
+	startCmd.Flags().StringP("profile", "p", acfg.Profile, "Profile to be used by pk")
+	viper.BindPFlag("profile", startCmd.Flags().Lookup("profile"))
 }

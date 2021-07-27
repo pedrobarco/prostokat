@@ -48,14 +48,22 @@ func loadConfig() {
 
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			initConfig()
+			resetConfig()
 			viper.ReadInConfig()
 		} else {
 			panic(fmt.Errorf("Fatal error reading config: %w \n", err))
 		}
 	}
 
+	if err := viper.Unmarshal(&acfg); err != nil {
+		panic(fmt.Errorf("Fatal error loading config: %s \n", err))
+	}
+
 	profile := viper.GetString("profile")
+	loadProfile(profile)
+}
+
+func loadProfile(profile string) {
 	viper.SetConfigName(profile)
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath("$HOME/.config/prostokat/profiles")
@@ -65,17 +73,12 @@ func loadConfig() {
 		panic(fmt.Errorf("Fatal error merging config: %w \n", err))
 	}
 
-	if err := viper.Unmarshal(&acfg); err != nil {
-		panic(fmt.Errorf("Fatal error loading config: %s \n", err))
-	}
-
 	if err := viper.Unmarshal(&pcfg); err != nil {
 		panic(fmt.Errorf("Fatal error loading config: %s \n", err))
 	}
-
 }
 
-func initConfig() {
+func resetConfig() {
 	homedir, err := os.UserHomeDir()
 	if err != nil {
 		log.Fatalf("could not get user home directory: %s \n", err)
