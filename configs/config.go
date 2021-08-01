@@ -3,6 +3,8 @@ package configs
 import (
 	"fmt"
 	"log"
+	"os"
+	"strings"
 
 	"gopkg.in/yaml.v2"
 )
@@ -66,7 +68,34 @@ func (cfg *Config) HasProfile(profile string) bool {
 	return cfg.profileFile.hasConfigFileByName(profile)
 }
 
-func (cfg *Config) LoadProfile(profile string) error {
+func (cfg *Config) ListProfiles() []string {
+	configDir := cfg.profileFile.Path
+	files, err := os.ReadDir(configDir)
+	if err != nil {
+		log.Fatalf("could not read profile config dir: %s \n", err)
+	}
+
+	var profiles []string
+	for _, file := range files {
+		if !file.IsDir() {
+			profileName := strings.Split(file.Name(), ".")[0]
+			profiles = append(profiles, profileName)
+		}
+	}
+	return profiles
+}
+
+func (cfg *Config) GetProfile(profile string) ([]byte, error) {
+	// check if profile exists
+	if profileExists := cfg.HasProfile(profile); !profileExists {
+		return nil, fmt.Errorf("error retrieving profile: profile does not exist")
+	}
+	// get profile
+	content := cfg.profileFile.getConfigContent(profile)
+	return content, nil
+}
+
+func (cfg *Config) SetProfile(profile string) error {
 	// check if profile exists
 	if profileExists := cfg.HasProfile(profile); !profileExists {
 		return fmt.Errorf("error loading profile: profile does not exist")

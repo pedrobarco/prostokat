@@ -62,7 +62,6 @@ func init() {
 	rootCmd.AddCommand(profiles.NewCmdProfiles(cfg))
 
 	// utilities
-	// rootCmd.AddCommand(versionCmd)
 	// rootCmd.AddCommand(infoCmd)
 }
 

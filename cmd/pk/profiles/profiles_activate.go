@@ -14,7 +14,7 @@ func NewCmdProfilesActivate(cfg *configs.Config) *cobra.Command {
 		Args:  cobra.MinimumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			profile := args[0]
-			err := cfg.LoadProfile(profile)
+			err := cfg.SetProfile(profile)
 			if err != nil {
 				fmt.Printf("Could not load profile %s: %s \n", profile, err)
 				return
@@ -22,6 +22,5 @@ func NewCmdProfilesActivate(cfg *configs.Config) *cobra.Command {
 			fmt.Printf("Profile %s is now active \n", profile)
 		},
 	}
-
 	return cmd
 }

@@ -84,3 +84,12 @@ func (cf *ConfigFile) deleteConfig(name string) {
 	}
 	fmt.Printf("- %s \n", file)
 }
+
+func (cf *ConfigFile) getConfigContent(name string) []byte {
+	file := cf.getConfigFileByName(name)
+	content, err := os.ReadFile(file)
+	if err != nil {
+		log.Fatalf("could not read config file: %s \n", err)
+	}
+	return content
+}
