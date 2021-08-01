@@ -15,7 +15,7 @@ const (
 
 func pathExists(path string) bool {
 	_, err := os.Stat(path)
-	if os.IsExist(err) {
+	if os.IsNotExist(err) {
 		return false
 	}
 	if err != nil {
@@ -74,4 +74,13 @@ func (cf *ConfigFile) saveConfigToFile(name string, content []byte) {
 
 func (cf *ConfigFile) saveConfig(content []byte) {
 	cf.saveConfigToFile(cf.Name, content)
+}
+
+func (cf *ConfigFile) deleteConfig(name string) {
+	file := cf.getConfigFileByName(name)
+	err := os.RemoveAll(file)
+	if err != nil {
+		log.Fatalf("could not delete config file: %s \n", err)
+	}
+	fmt.Printf("- %s \n", file)
 }

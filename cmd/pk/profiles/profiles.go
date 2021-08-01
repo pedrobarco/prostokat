@@ -8,22 +8,6 @@ import (
 )
 
 var (
-	createProfileCmd = &cobra.Command{
-		Use:   "create",
-		Short: "Create a new named profile",
-		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("create profile")
-		},
-	}
-
-	deleteProfileCmd = &cobra.Command{
-		Use:   "delete",
-		Short: "Deletes a named profile",
-		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("delete profile")
-		},
-	}
-
 	describeProfileCmd = &cobra.Command{
 		Use:   "describe",
 		Short: "Describes a named profile by listing its properties",
@@ -48,9 +32,9 @@ func NewCmdProfiles(cfg *configs.Config) *cobra.Command {
 	}
 
 	cmd.AddCommand(NewCmdProfilesActivate(cfg))
-	// profilesCmd.AddCommand(createProfileCmd)
-	// profilesCmd.AddCommand(deleteProfileCmd)
-	// profilesCmd.AddCommand(describeProfileCmd)
-	// profilesCmd.AddCommand(listProfilesCmd)
+	cmd.AddCommand(NewCmdProfilesCreate(cfg))
+	cmd.AddCommand(NewCmdProfilesDelete(cfg))
+	// cmd.AddCommand(describeProfileCmd)
+	// cmd.AddCommand(listProfilesCmd)
 	return cmd
 }

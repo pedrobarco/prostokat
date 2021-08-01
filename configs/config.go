@@ -62,18 +62,53 @@ func (c *Config) CreateDefaultConfig() {
 	c.profileFile.saveConfig(bs)
 }
 
+func (cfg *Config) HasProfile(profile string) bool {
+	return cfg.profileFile.hasConfigFileByName(profile)
+}
+
 func (cfg *Config) LoadProfile(profile string) error {
-	profileExists := cfg.profileFile.hasConfigFileByName(profile)
-	if !profileExists {
+	// check if profile exists
+	if profileExists := cfg.HasProfile(profile); !profileExists {
 		return fmt.Errorf("error loading profile: profile does not exist")
 	}
+	// set new profile
 	cfg.App.Profile = profile
-	// TODO: marshal to yaml
+	// convert to yaml
 	bs, err := yaml.Marshal(cfg.App)
 	if err != nil {
-		return fmt.Errorf("could not marshal new profile config: %s \n", err)
+		return fmt.Errorf("error marshalling profile config: %s \n", err)
 	}
-	// TODO: save to config
+	// save to file
 	cfg.appFile.saveConfig(bs)
+	return nil
+}
+
+func (cfg *Config) CreateProfile(profile string) error {
+	// check if profile exists
+	if profileExists := cfg.HasProfile(profile); profileExists {
+		return fmt.Errorf("error creating profile: profile already exists")
+	}
+	// convert to yaml
+	profileConfig := GetDefaultProfileConfig()
+	bs, err := yaml.Marshal(profileConfig)
+	if err != nil {
+		return fmt.Errorf("error marshalling profile config: %s \n", err)
+	}
+	// create new profile config
+	cfg.profileFile.saveConfigToFile(profile, bs)
+	return nil
+}
+
+func (cfg *Config) DeleteProfile(profile string) error {
+	// check if profile is active
+	if profileIsActive := profile == cfg.App.Profile; profileIsActive {
+		return fmt.Errorf("error deleting profile: cannot delete an active profile")
+	}
+	// check if profile exists
+	if profileExists := cfg.HasProfile(profile); !profileExists {
+		return fmt.Errorf("error deleting profile: profile does not exists")
+	}
+	// delete profile config
+	cfg.profileFile.deleteConfig(profile)
 	return nil
 }
