@@ -1,25 +1,13 @@
-package main
+package profiles
 
 import (
 	"fmt"
+	"prostokat/configs"
 
 	"github.com/spf13/cobra"
 )
 
 var (
-	profilesCmd = &cobra.Command{
-		Use:   "profiles",
-		Short: "Manage prostokat profiles",
-	}
-
-	activateProfileCmd = &cobra.Command{
-		Use:   "activate",
-		Short: "Activates an existing named profile",
-		Args:  cobra.MinimumNArgs(1),
-		Run: func(cmd *cobra.Command, args []string) {
-		},
-	}
-
 	createProfileCmd = &cobra.Command{
 		Use:   "create",
 		Short: "Create a new named profile",
@@ -53,14 +41,16 @@ var (
 	}
 )
 
-func isProfile(profile string) {
+func NewCmdProfiles(cfg *configs.Config) *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "profiles",
+		Short: "Manage prostokat profiles",
+	}
 
-}
-
-func init() {
-	// profilesCmd.AddCommand(activateProfileCmd)
+	cmd.AddCommand(NewCmdProfilesActivate(cfg))
 	// profilesCmd.AddCommand(createProfileCmd)
 	// profilesCmd.AddCommand(deleteProfileCmd)
 	// profilesCmd.AddCommand(describeProfileCmd)
 	// profilesCmd.AddCommand(listProfilesCmd)
+	return cmd
 }

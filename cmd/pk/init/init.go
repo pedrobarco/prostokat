@@ -23,21 +23,18 @@ Ideal for a fresh start!`,
 			}
 
 			if !hasConfig {
+				fmt.Println("Creating default config...")
 				cfg.CreateDefaultConfig()
-				return
-			}
-
-			if hasConfig && force {
+			} else if hasConfig && force {
 				fmt.Println("Forcing config reset...")
 				cfg.ResetConfig()
-				return
 			}
 
-			fmt.Println("Config folder already exists: use -f/--force flag to reinitialize pk")
+			fmt.Println("All done: pk is ready!")
 		},
 	}
 
-	cmd.Flags().BoolP("force", "f", true, "forces to recreate configs")
+	cmd.Flags().BoolP("force", "f", true, "forces pk to reset configs")
 	viper.BindPFlag("force", cmd.Flags().Lookup("force"))
 
 	return cmd

@@ -63,7 +63,7 @@ func (cf *ConfigFile) deleteConfigFolder() {
 	fmt.Printf("- %s \n", cf.Path)
 }
 
-func (cf *ConfigFile) createConfigFile(name string, content []byte) {
+func (cf *ConfigFile) saveConfigToFile(name string, content []byte) {
 	file := cf.getConfigFileByName(name)
 	err := os.WriteFile(file, content, fileMode)
 	if err != nil {
@@ -72,6 +72,6 @@ func (cf *ConfigFile) createConfigFile(name string, content []byte) {
 	fmt.Printf("+ %s \n", file)
 }
 
-func (cf *ConfigFile) createDefaultConfigFile(content []byte) {
-	cf.createConfigFile(cf.Name, content)
+func (cf *ConfigFile) saveConfig(content []byte) {
+	cf.saveConfigToFile(cf.Name, content)
 }

@@ -14,15 +14,6 @@ type Config struct {
 	profileFile *ConfigFile
 }
 
-/*
-func (cfg *Config) LoadProfile(profile string) error {
-    profileExists := cfg.FilesConfig.hasProfile(profile)
-    if !profileExists {
-        return fmt.Errorf("error loading profile: profile does not exist")
-    }
-}
-*/
-
 func Create(afile *ConfigFile, pfile *ConfigFile) *Config {
 	return &Config{
 		appFile:     afile,
@@ -57,7 +48,7 @@ func (c *Config) CreateDefaultConfig() {
 		log.Fatalf("could not marshal default app config: %s \n", err)
 	}
 	// save app config to file
-	c.appFile.createDefaultConfigFile(bs)
+	c.appFile.saveConfig(bs)
 
 	// create profile config folder
 	c.profileFile.createConfigFolder()
@@ -68,6 +59,21 @@ func (c *Config) CreateDefaultConfig() {
 		log.Fatalf("could not marshal default profile config: %s \n", err)
 	}
 	// save profile config to file
-	c.profileFile.createDefaultConfigFile(bs)
-	fmt.Println("All done: pk is ready!")
+	c.profileFile.saveConfig(bs)
+}
+
+func (cfg *Config) LoadProfile(profile string) error {
+	profileExists := cfg.profileFile.hasConfigFileByName(profile)
+	if !profileExists {
+		return fmt.Errorf("error loading profile: profile does not exist")
+	}
+	cfg.App.Profile = profile
+	// TODO: marshal to yaml
+	bs, err := yaml.Marshal(cfg.App)
+	if err != nil {
+		return fmt.Errorf("could not marshal new profile config: %s \n", err)
+	}
+	// TODO: save to config
+	cfg.appFile.saveConfig(bs)
+	return nil
 }

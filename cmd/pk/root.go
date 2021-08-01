@@ -7,6 +7,7 @@ import (
 	"path"
 
 	cmdInit "prostokat/cmd/pk/init"
+	"prostokat/cmd/pk/profiles"
 	"prostokat/cmd/pk/start"
 	"prostokat/configs"
 
@@ -58,7 +59,7 @@ func init() {
 	rootCmd.AddCommand(start.NewCmdStart(cfg))
 
 	// profiles
-	// rootCmd.AddCommand(NewCmdProfiles())
+	rootCmd.AddCommand(profiles.NewCmdProfiles(cfg))
 
 	// utilities
 	// rootCmd.AddCommand(versionCmd)
