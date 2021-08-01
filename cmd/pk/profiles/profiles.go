@@ -15,6 +15,7 @@ func NewCmdProfiles(cfg *configs.Config) *cobra.Command {
 	cmd.AddCommand(NewCmdProfilesActivate(cfg))
 	cmd.AddCommand(NewCmdProfilesCreate(cfg))
 	cmd.AddCommand(NewCmdProfilesDelete(cfg))
+	cmd.AddCommand(NewCmdProfilesEdit(cfg))
 	cmd.AddCommand(NewCmdProfilesDescribe(cfg))
 	cmd.AddCommand(NewCmdProfilesList(cfg))
 

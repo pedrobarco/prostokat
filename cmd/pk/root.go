@@ -20,7 +20,7 @@ var rootCmd = &cobra.Command{
 	Use:     "pk",
 	Short:   "A polished GNU/Linux tilling utility",
 	Long: `Prostokat is a minimal tilling utility built in Go and pk is its CLI version.
-Complete documentation is available at http://github.com/pedrobarco/prostokat.`,
+Complete documentation is available at https://github.com/pedrobarco/prostokat.`,
 }
 
 var afile *configs.ConfigFile

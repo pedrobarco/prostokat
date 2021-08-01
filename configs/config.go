@@ -51,7 +51,6 @@ func (c *Config) CreateDefaultConfig() {
 	}
 	// save app config to file
 	c.appFile.saveConfig(bs)
-
 	// create profile config folder
 	c.profileFile.createConfigFolder()
 	// create default profile config
@@ -70,13 +69,14 @@ func (cfg *Config) HasProfile(profile string) bool {
 
 func (cfg *Config) ListProfiles() []string {
 	configDir := cfg.profileFile.Path
+	// read files from profile directory
 	files, err := os.ReadDir(configDir)
 	if err != nil {
 		log.Fatalf("could not read profile config dir: %s \n", err)
 	}
-
 	var profiles []string
 	for _, file := range files {
+		// filter for files
 		if !file.IsDir() {
 			profileName := strings.Split(file.Name(), ".")[0]
 			profiles = append(profiles, profileName)
@@ -140,4 +140,8 @@ func (cfg *Config) DeleteProfile(profile string) error {
 	// delete profile config
 	cfg.profileFile.deleteConfig(profile)
 	return nil
+}
+
+func (cfg *Config) GetProfileFile(profile string) string {
+	return cfg.profileFile.getConfigFileByName(profile)
 }
