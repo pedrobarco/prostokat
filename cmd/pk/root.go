@@ -2,142 +2,108 @@ package main
 
 import (
 	"fmt"
-	"io/fs"
 	"log"
 	"os"
+	"path"
+
+	cmdInit "prostokat/cmd/pk/init"
+	"prostokat/cmd/pk/start"
 	"prostokat/configs"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"gopkg.in/yaml.v2"
 )
 
 var rootCmd = &cobra.Command{
-	Version: "0.1.1",
+	Version: "0.1.2",
 	Use:     "pk",
 	Short:   "A polished GNU/Linux tilling utility",
-	Long: `Prostokat is a minimal tilling utility built in Go.
-Pk is Prostokat's CLI version.
+	Long: `Prostokat is a minimal tilling utility built in Go and pk is its CLI version.
 Complete documentation is available at http://github.com/pedrobarco/prostokat.`,
 }
 
+var afile *configs.ConfigFile
+var pfile *configs.ConfigFile
+var cfg *configs.Config
+
 func init() {
-	cobra.OnInitialize(loadConfig)
+	homedir, err := os.UserHomeDir()
+	if err != nil {
+		log.Fatalf("could not get user home directory: %s \n", err)
+	}
+
+	afile = &configs.ConfigFile{
+		Name: "config",
+		Type: "yaml",
+		Path: path.Join(homedir, ".config/prostokat"),
+	}
+
+	pfile = &configs.ConfigFile{
+		Name: "default",
+		Type: afile.Type,
+		Path: path.Join(afile.Path, "profiles"),
+	}
+
+	cfg = configs.Create(afile, pfile)
+
+	cobra.OnInitialize(loadAppConfig)
 
 	// set version template
 	rootCmd.SetVersionTemplate(fmt.Sprintf("v%s\n", rootCmd.Version))
 
+	// init
+	rootCmd.AddCommand(cmdInit.NewCmdInit(cfg))
+
 	// start
-	rootCmd.AddCommand(startCmd)
+	rootCmd.AddCommand(start.NewCmdStart(cfg))
 
 	// profiles
-	// rootCmd.AddCommand(profilesCmd)
+	// rootCmd.AddCommand(NewCmdProfiles())
 
 	// utilities
 	// rootCmd.AddCommand(versionCmd)
 	// rootCmd.AddCommand(infoCmd)
 }
 
-var acfg configs.AppConfig
-var pcfg configs.ProfileConfig
-
-func loadConfig() {
-	viper.SetConfigName("config")
-	viper.SetConfigType("yaml")
-	viper.AddConfigPath("$HOME/.config/prostokat")
+func loadAppConfig() {
+	viper.SetConfigName(afile.Name)
+	viper.SetConfigType(afile.Type)
+	viper.AddConfigPath(afile.Path)
 
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			resetConfig()
+			fmt.Println("Initalizing config...")
+			cfg.CreateDefaultConfig()
 			viper.ReadInConfig()
+			fmt.Println()
 		} else {
 			panic(fmt.Errorf("Fatal error reading config: %w \n", err))
 		}
 	}
 
+	var acfg *configs.AppConfig
 	if err := viper.Unmarshal(&acfg); err != nil {
 		panic(fmt.Errorf("Fatal error loading config: %s \n", err))
 	}
 
-	profile := viper.GetString("profile")
-	loadProfile(profile)
+	cfg.SetAppConfig(acfg)
+	loadProfileConfig(acfg.Profile)
 }
 
-func loadProfile(profile string) {
+func loadProfileConfig(profile string) {
 	viper.SetConfigName(profile)
-	viper.SetConfigType("yaml")
-	viper.AddConfigPath("$HOME/.config/prostokat/profiles")
+	viper.SetConfigType(pfile.Type)
+	viper.AddConfigPath(pfile.Path)
 
 	err := viper.MergeInConfig()
 	if err != nil {
 		panic(fmt.Errorf("Fatal error merging config: %w \n", err))
 	}
 
+	var pcfg *configs.ProfileConfig
 	if err := viper.Unmarshal(&pcfg); err != nil {
 		panic(fmt.Errorf("Fatal error loading config: %s \n", err))
 	}
-}
 
-func resetConfig() {
-	homedir, err := os.UserHomeDir()
-	if err != nil {
-		log.Fatalf("could not get user home directory: %s \n", err)
-	}
-
-	var (
-		appConfigDir  = homedir + "/.config/prostokat"
-		appConfigName = "config"
-		appConfigType = "yaml"
-		appConfigFile = appConfigName + "." + appConfigType
-		appConfigPath = appConfigDir + "/" + appConfigFile
-
-		profileConfigDir  = appConfigDir + "/profiles"
-		profileConfigFile = "default.yaml"
-		profileConfigPath = profileConfigDir + "/" + profileConfigFile
-
-		dirMode  = fs.FileMode(0775)
-		fileMode = fs.FileMode(0600)
-	)
-
-	// delete old configs
-	err = os.RemoveAll(appConfigDir)
-	if err != nil {
-		log.Fatalf("could not delete config folder: %s \n", err)
-	}
-
-	// create app config folder
-	err = os.Mkdir(appConfigDir, dirMode)
-	if err != nil {
-		log.Fatalf("could not create config folder: %s \n", err)
-	}
-
-	// create profile config folder
-	err = os.Mkdir(profileConfigDir, dirMode)
-	if err != nil {
-		log.Fatalf("could not create profile folder: %s \n", err)
-	}
-
-	// create default app config
-	appConfig := configs.GetDefaultAppConfig()
-	bs, err := yaml.Marshal(appConfig)
-	if err != nil {
-		log.Fatalf("could not marshal default app config: %s \n", err)
-	}
-	err = os.WriteFile(appConfigPath, bs, fileMode)
-	if err != nil {
-		log.Fatalf("could not create default app config: %s \n", err)
-	}
-	// fmt.Printf("created app config at %s\n", appConfigPath)
-
-	// create default profile config
-	profileConfig := configs.GetDefaultProfileConfig()
-	bs, err = yaml.Marshal(profileConfig)
-	if err != nil {
-		log.Fatalf("could not marshal default profile config: %s \n", err)
-	}
-	err = os.WriteFile(profileConfigPath, bs, fileMode)
-	if err != nil {
-		log.Fatalf("could not create default profile config: %s \n", err)
-	}
-	// fmt.Printf("created default profile at %s\n", profileConfigPath)
+	cfg.SetProfileConfig(pcfg)
 }

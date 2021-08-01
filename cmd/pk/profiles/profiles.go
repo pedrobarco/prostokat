@@ -15,8 +15,8 @@ var (
 	activateProfileCmd = &cobra.Command{
 		Use:   "activate",
 		Short: "Activates an existing named profile",
+		Args:  cobra.MinimumNArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("activate profile")
 		},
 	}
 
@@ -52,6 +52,10 @@ var (
 		},
 	}
 )
+
+func isProfile(profile string) {
+
+}
 
 func init() {
 	// profilesCmd.AddCommand(activateProfileCmd)
