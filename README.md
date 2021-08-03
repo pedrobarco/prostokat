@@ -22,7 +22,7 @@
   </a>
 </p> <p align="center">
   <a href="#key-features">Key Features</a> •
-  <a href="#intro">Install</a> •
+  <a href="#intro">Intro</a> •
   <a href="#install">Install</a> •
   <a href="#how-to-use">How To Use</a> •
   <a href="#configuration">Configuration</a> •
@@ -48,9 +48,10 @@ With pk one could create, edit, delete and activate profiles.
 
 A **profile** is a configuration for your tilling: it has a **grid** and a **layout**.
 
-A **grid** represents the way the screen is divided in equally sized cells.
+A **grid** represents the way the screen is divided in equally sized cells
 - A 3x1 grid would divide a screen into 3, using 3 columns and 1 row.
 - A 4x2 grid would divide a screen into 8, using 4 columns and 2 rows. 
+- A `n`x`m` grid would divide a screen in `n` columns and `m` rows
 
 ```bash
 # 3x1 grid
@@ -93,10 +94,10 @@ You can have as many areas in your layout as grid cells, so for a 2x2 grid you c
 ```
 
 An **area** is a tilling region that has coordinates and dimensions.
-- posx: x position in grid
-- posy: y position in grid
-- height: number of rows to span
-- width: number of columns to span
+- `posx`: x position in grid
+- `posy`: y position in grid
+- `height`: number of rows to span
+- `width`: number of columns to span
 
 ```yaml
 # profiles/default.yaml
@@ -172,7 +173,7 @@ Use "pk [command] --help" for more information about a command.
 The default configuration splits the monitor in thirds.
 However, you can have as many profiles as you would like.
 
-### Configuring Profiles
+## Configuration
 
 Using `pk profiles` you can easily manage your profiles.
 
@@ -209,7 +210,7 @@ $ pk profiles create dev
 Profile dev was successfully created 
 
 $ pk profiles create games
-+ $HOME/.config/prostokat/profiles/profiles.yaml 
++ $HOME/.config/prostokat/profiles/games.yaml 
 Profile games was successfully created 
 ```
 
@@ -272,9 +273,9 @@ When playing games, we can run prostokat with a custom profile: `$ pk start -p g
 
 Have fun!
 
-## Download (WIP)
+## Download
 
-You can [download](https://github.com/pedrobarco/prostokat/releases) the latest installable version of Prostokat for GNU/Linux distros.
+(WIP) You can [download](https://github.com/pedrobarco/prostokat/releases) the latest installable version of Prostokat for GNU/Linux distros.
 
 ## Credits
 
