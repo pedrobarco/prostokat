@@ -44,14 +44,13 @@
 ## Intro
 
 Prostokat uses profiles to manage different tilling configurations.
-With pk one could create, edit, delete and activate profiles.
 
 A **profile** is a configuration for your tilling: it has a **grid** and a **layout**.
 
 A **grid** represents the way the screen is divided in equally sized cells
 - A 3x1 grid would divide a screen into 3, using 3 columns and 1 row.
 - A 4x2 grid would divide a screen into 8, using 4 columns and 2 rows. 
-- A `n`x`m` grid would divide a screen in `n` columns and `m` rows
+- A `n`x`m` grid would divide a screen into `n*m`, using `n` columns and `m` rows
 
 ```bash
 # 3x1 grid
@@ -68,11 +67,11 @@ A **grid** represents the way the screen is divided in equally sized cells
 ```
 
 A **layout** is an array of areas in your grid which will be used to tile your windows to.
-You can have as many areas in your layout as grid cells, so for a 2x2 grid you could not have more than 4 areas.
+You can have as many areas in your layout as grid cells, so for a 2x2 grid you could have up to 4 areas.
 
 - A layout in a 2x2 grid could have 4 areas, one per grid cell
 - A layout in a 3x1 grid could have 3 areas, dividing the screen in thirds
-- A layout in a 4x1 grid could have 3 areas: 1 big one at the middle, and 2 smaller ones at the sides
+- A layout in a 4x1 grid could have 3 areas too: 1 big one at the middle, and 2 smaller ones at the sides
 
 ```bash
 # 2x2 grid with 4 areas 
@@ -151,7 +150,7 @@ $ pk -h
 
 Start prostokat via its CLI by running `pk start`. 
 You should now be able to use `Shift + Mouse 3` to tile an active window to the closest tilling area.
-> Note: Prostokat uses the current mouse position to detect which area should the window be tilled to. 
+> Note: Prostokat uses the current mouse position to detect to which area should the window be tilled to.
 
 ```
 Usage:
@@ -201,7 +200,7 @@ For the `games` profile:
 |-+-+-+-|    |-+-+-+-|
 ```
 
-Let's start by creating profiles.
+Let's start by creating our profiles.
 > Note: pk uses the default profile template to create new profiles.
 
 ```bash
@@ -268,7 +267,8 @@ layouts:
   height: 1
 ```
 
-Now we can run `$ pk profiles activate dev` to set our default profile for `$ pk start`.
+Now we can run `$ pk profiles activate dev` to set our default profile to dev. 
+Running `$ pk start` will now use the dev profile by default.
 When playing games, we can run prostokat with a custom profile: `$ pk start -p games`.
 
 Have fun!
