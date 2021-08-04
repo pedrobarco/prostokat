@@ -1,6 +1,5 @@
 BINDIR      := $(CURDIR)/bin
 INSTALL_PATH ?= /usr/local/bin
-DIST_DIRS   := find * -type d -exec
 BINNAME     ?= pk
 
 GOBIN         = $(shell go env GOBIN)
@@ -73,7 +72,7 @@ test-unit:
 # clean
 
 clean:
-	@rm -rf '$(BINDIR)' ./_dist
+	@rm -rf '$(BINDIR)'
 
 
 info:

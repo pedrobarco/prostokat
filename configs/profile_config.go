@@ -1,7 +1,6 @@
 package configs
 
 type ProfileConfig struct {
-	Name    string         `yaml:"profile"`
 	Grid    GridConfig     `yaml:"grid"`
 	Layouts []LayoutConfig `yaml:"layouts"`
 }
@@ -20,7 +19,6 @@ type LayoutConfig struct {
 
 func GetDefaultProfileConfig() *ProfileConfig {
 	return &ProfileConfig{
-		Name: "default",
 		Grid: GridConfig{
 			Cols: 3,
 			Rows: 1,
