@@ -70,7 +70,10 @@ func NewCmdStart(cfg *configs.Config) *cobra.Command {
 	}
 
 	cmd.Flags().StringP("profile", "p", "default", "Profile to be used by pk")
-	viper.BindPFlag("profile", cmd.Flags().Lookup("profile"))
+	err := viper.BindPFlag("profile", cmd.Flags().Lookup("profile"))
+	if err != nil {
+		panic(fmt.Errorf("Unexpected error while parsing flags: %s \n", err))
+	}
 
 	return cmd
 }

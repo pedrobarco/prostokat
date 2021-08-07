@@ -74,8 +74,10 @@ func loadAppConfig() {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
 			fmt.Println("Initalizing config...")
 			cfg.CreateDefaultConfig()
-			viper.ReadInConfig()
-			fmt.Println()
+			err = viper.ReadInConfig()
+			if err != nil {
+				panic(fmt.Errorf("Fatal error creating config: %s", err))
+			}
 		} else {
 			panic(fmt.Errorf("Fatal error reading config: %w \n", err))
 		}
