@@ -1,7 +1,6 @@
 BINDIR      := $(CURDIR)/bin
 INSTALL_PATH ?= /usr/local/bin
 BINNAME     ?= pk
-VERSION     := 0.2.0
 
 GOBIN         = $(shell go env GOBIN)
 ifeq ($(GOBIN),)
@@ -31,8 +30,21 @@ GIT_DIRTY  = $(shell test -n "`git status --porcelain`" && echo "dirty" || echo 
 ifdef VERSION
 	BINARY_VERSION = $(VERSION)
 endif
-BINARY_VERSION ?= $(GIT_TAG)
+BINARY_VERSION ?= ${GIT_TAG}
 
+# Only set Version if building a tag or VERSION is set
+ifneq ($(BINARY_VERSION),)
+	LDFLAGS += -X prostokat/internal/version.version=${BINARY_VERSION}
+endif
+
+VERSION_METADATA = unreleased
+# Clear the "unreleased" string in BuildMetadata
+ifneq ($(GIT_TAG),)
+	VERSION_METADATA =
+endif
+
+LDFLAGS += -X prostokat/internal/version.metadata=${VERSION_METADATA}
+LDFLAGS += -X prostokat/internal/version.gitCommit=${GIT_COMMIT}
 LDFLAGS += $(EXT_LDFLAGS)
 
 .PHONY: all
