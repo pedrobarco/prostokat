@@ -1,4 +1,5 @@
 BINDIR      := $(CURDIR)/bin
+DISTDIR      := $(CURDIR)/dist
 INSTALL_PATH ?= /usr/local/bin
 BINNAME     ?= pk
 
@@ -88,7 +89,7 @@ test-unit:
 
 .PHONY: clean
 clean:
-	@rm -rf '$(BINDIR)'
+	@rm -rf '$(BINDIR)' '$(DISTDIR)'
 
 # ------------------------------------------------------------------------------
 # info
