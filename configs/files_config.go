@@ -34,10 +34,6 @@ func (cf *ConfigFile) getConfigFileByName(name string) string {
 	return path.Join(cf.Path, name+"."+cf.Type)
 }
 
-func (cf *ConfigFile) getConfigFile() string {
-	return cf.getConfigFileByName(cf.Name)
-}
-
 func (cf *ConfigFile) hasConfigFileByName(name string) bool {
 	file := cf.getConfigFileByName(name)
 	return pathExists(file)

@@ -8,7 +8,7 @@ import (
 	"github.com/BurntSushi/xgbutil/xwindow"
 )
 
-func Tile(win *xwindow.Window, a *areas.Area) {
+func tile(win *xwindow.Window, a *areas.Area) {
 	f := frames.WindowFrames(win)
 
 	dx := a.X - f.Left

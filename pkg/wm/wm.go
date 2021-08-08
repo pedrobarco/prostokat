@@ -24,7 +24,7 @@ func (wm *WM) config() string {
 	btnStr := strings.Split(wm.Mousebind, "-")
 
 	fmt.Fprintln(&b, "= Prostokat WM =")
-	fmt.Fprintf(&b, wm.Grid.String())
+	fmt.Fprint(&b, wm.Grid.String())
 	fmt.Fprintf(&b, "Mousebind: %s-Mouse%s\n", btnStr[0], btnStr[1])
 
 	return b.String()
@@ -80,5 +80,5 @@ func (wm *WM) tileByMPos(mx, my int) {
 	}
 
 	w := xwindow.New(wm.X, xwin)
-	Tile(w, a)
+	tile(w, a)
 }

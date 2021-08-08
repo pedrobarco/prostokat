@@ -35,7 +35,10 @@ Ideal for a fresh start!`,
 	}
 
 	cmd.Flags().BoolP("force", "f", true, "forces pk to reset configs")
-	viper.BindPFlag("force", cmd.Flags().Lookup("force"))
+	err := viper.BindPFlag("force", cmd.Flags().Lookup("force"))
+	if err != nil {
+		panic(fmt.Errorf("Unexpected error while parsing flags: %s \n", err))
+	}
 
 	return cmd
 }

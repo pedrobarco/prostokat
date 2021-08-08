@@ -1,0 +1,29 @@
+env:
+  - GO111MODULE=on
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - id: pk
+    main: ./cmd/pk
+    binary: pk
+    goos:
+      - linux
+    env:
+      - GO386=softfloat
+      - CGO_ENABLE=0
+nfpms:
+  - homepage: https://github.com/pedrobarco/prostokat
+    description: prostokat is a minimal tilling utility for GNU/Linux
+    maintainer: Pedro Barco <pedro.barco@tecnico.ulisboa.pt>
+    license: MIT
+    formats:
+      - apk
+      - deb
+      - rpm
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
