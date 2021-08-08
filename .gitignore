@@ -16,4 +16,4 @@
 # vendor/
 
 # Release artifacts
-_dist
+dist/
