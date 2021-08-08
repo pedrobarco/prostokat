@@ -1,10 +1,10 @@
 package main
 
-import "fmt"
+import "os"
 
 func main() {
-	err := rootCmd.Execute()
+	err := cmd.Execute()
 	if err != nil {
-		panic(fmt.Errorf("Fatal error running cli: %s", err))
+		os.Exit(1)
 	}
 }

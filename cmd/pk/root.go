@@ -10,22 +10,27 @@ import (
 	"prostokat/cmd/pk/profiles"
 	"prostokat/cmd/pk/start"
 	"prostokat/configs"
+	"prostokat/internal/version"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
-var rootCmd = &cobra.Command{
-	Version: "0.1.2",
-	Use:     "pk",
-	Short:   "A polished GNU/Linux tilling utility",
-	Long: `Prostokat is a minimal tilling utility built in Go and pk is its CLI version.
-Complete documentation is available at https://github.com/pedrobarco/prostokat.`,
-}
+var (
+	afile *configs.ConfigFile
+	pfile *configs.ConfigFile
+	cfg   *configs.Config
 
-var afile *configs.ConfigFile
-var pfile *configs.ConfigFile
-var cfg *configs.Config
+	semver = version.GetVersion()
+
+	cmd = &cobra.Command{
+		Version: semver,
+		Use:     "pk",
+		Short:   "A polished GNU/Linux tilling utility",
+		Long: `Prostokat is a minimal tilling utility built in Go and pk is its CLI version.
+Complete documentation is available at https://github.com/pedrobarco/prostokat.`,
+	}
+)
 
 func init() {
 	homedir, err := os.UserHomeDir()
@@ -50,19 +55,19 @@ func init() {
 	cobra.OnInitialize(loadAppConfig)
 
 	// set version template
-	rootCmd.SetVersionTemplate(fmt.Sprintf("v%s\n", rootCmd.Version))
+	cmd.SetVersionTemplate(fmt.Sprintf("v%s\n", semver))
 
 	// init
-	rootCmd.AddCommand(cmdInit.NewCmdInit(cfg))
+	cmd.AddCommand(cmdInit.NewCmdInit(cfg))
 
 	// start
-	rootCmd.AddCommand(start.NewCmdStart(cfg))
+	cmd.AddCommand(start.NewCmdStart(cfg))
 
 	// profiles
-	rootCmd.AddCommand(profiles.NewCmdProfiles(cfg))
+	cmd.AddCommand(profiles.NewCmdProfiles(cfg))
 
 	// utilities
-	// rootCmd.AddCommand(infoCmd)
+	// cmd.AddCommand(infoCmd)
 }
 
 func loadAppConfig() {

@@ -9,6 +9,10 @@ builds:
     binary: pk
     goos:
       - linux
+    ldflags:
+      - -w -s
+      - -X prostokat/internal/version.version={{trimprefix .Version "v"}}
+      - -X prostokat/internal/version.gitCommit={{ .Commit }}
     env:
       - GO386=softfloat
       - CGO_ENABLE=0
