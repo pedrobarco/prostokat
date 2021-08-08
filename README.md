@@ -26,7 +26,6 @@
   <a href="#install">Install</a> •
   <a href="#how-to-use">How To Use</a> •
   <a href="#configuration">Configuration</a> •
-  <a href="#download">Download</a> •
   <a href="#credits">Credits</a> •
   <a href="#contribute">Contribute</a> •
   <a href="#license">License</a>
@@ -37,7 +36,7 @@
 - [x] Tile using a layout and a grid
 - [x] Use a global mousebind to tile windows
 - [ ] Tile by snapping windows to areas
-- [ ] Choose your daemon: CLI vs GUI
+- [ ] Flexible CLI + GUI app
 - [x] Compatible with most GNU/Linux desktop environments
 - [x] No dependencies, just a binary
 
@@ -125,7 +124,9 @@ layouts:
   height: 1
 ```
 
-## Install 
+## Install
+
+You can [download](https://github.com/pedrobarco/prostokat/releases) the latest installable version of Prostokat for GNU/Linux distros.
 
 To clone and run this application, you'll need [Git](https://git-scm.com) and [Golang](https://golang.org/) installed on your computer. From your command line:
 
@@ -273,9 +274,6 @@ When playing games, we can run prostokat with a custom profile: `$ pk start -p g
 
 Have fun!
 
-## Download
-
-(WIP) You can [download](https://github.com/pedrobarco/prostokat/releases) the latest installable version of Prostokat for GNU/Linux distros.
 
 ## Credits
 
@@ -285,12 +283,16 @@ This software uses the following open source packages:
 - [xgb](https://github.com/BurntSushi/xgb)
 - [cobra](https://github.com/spf13/cobra)
 - [viper](https://github.com/spf13/viper)
+- [goreleaser](https://github.com/goreleaser/goreleaser)
+- [nfpm](https://github.com/goreleaser/nfpm)
+- [golanci-lint](https://github.com/golangci/golangci-lint)
+- [pre-commit](https://github.com/pre-commit/pre-commit)
 
 ## Contribute
 
 1. [Fork it](https://github.com/pedrobarco/prostokat/fork)
 2. Create your feature branch (`git checkout -b feature/myFeature`)
-3. Commit your changes (`git commit -am 'add something'`)
+3. Commit your changes (`git commit -am 'feat: add something'`)
 4. Push to the branch (`git push origin feature/myFeature`)
 5. Create a new [Pull Request](https://github.com/pedrobarco/prostokat/pulls)
 
