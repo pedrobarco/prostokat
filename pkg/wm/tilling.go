@@ -17,6 +17,5 @@ func tile(win *xwindow.Window, a *areas.Area) {
 	h := a.H + (f.Bot + f.Top)
 
 	log.Printf("tile: window %d - (%d,%d) %dx%d\n", win.Id, dx, dy, w, h)
-	win.Move(dx, dy)
-	win.Resize(w, h)
+	win.MoveResize(dx, dy, w, h)
 }
