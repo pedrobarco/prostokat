@@ -140,5 +140,6 @@ func (g *Grid) ClosestArea(xu *xgbutil.XUtil, x, y int) (*areas.Area, error) {
 			return &areas.Area{X: xmin, Y: ymin, W: w, H: h}, nil
 		}
 	}
+
 	return nil, fmt.Errorf("grid: no area containing (%d, %d)\n", x, y)
 }

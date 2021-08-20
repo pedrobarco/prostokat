@@ -25,27 +25,20 @@ SHELL      = /usr/bin/env bash
 
 GIT_COMMIT = $(shell git rev-parse HEAD)
 GIT_SHA    = $(shell git rev-parse --short HEAD)
-GIT_TAG    = $(shell git describe --tags --abbrev=0 --exact-match 2>/dev/null)
+GIT_TAG    = $(shell git describe | cut -c2-)
 GIT_DIRTY  = $(shell test -n "`git status --porcelain`" && echo "dirty" || echo "clean")
+
+VERSION_METADATA = unreleased
 
 ifdef VERSION
 	BINARY_VERSION = $(VERSION)
-endif
-BINARY_VERSION ?= ${GIT_TAG}
-
-# Only set Version if building a tag or VERSION is set
-ifneq ($(BINARY_VERSION),)
-	LDFLAGS += -X prostokat/internal/version.version=${BINARY_VERSION}
-endif
-
-VERSION_METADATA = unreleased
-# Clear the "unreleased" string in BuildMetadata
-ifneq ($(GIT_TAG),)
 	VERSION_METADATA =
 endif
+BINARY_VERSION ?= $(GIT_TAG)
 
-LDFLAGS += -X prostokat/internal/version.metadata=${VERSION_METADATA}
-LDFLAGS += -X prostokat/internal/version.gitCommit=${GIT_COMMIT}
+LDFLAGS += -X prostokat/internal/version.version=$(BINARY_VERSION)
+LDFLAGS += -X prostokat/internal/version.metadata=$(VERSION_METADATA)
+LDFLAGS += -X prostokat/internal/version.gitCommit=$(GIT_COMMIT)
 LDFLAGS += $(EXT_LDFLAGS)
 
 .PHONY: all

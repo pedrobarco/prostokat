@@ -76,7 +76,8 @@ func (wm *WM) tileByMPos(mx, my int) {
 
 	a, err := wm.Grid.ClosestArea(wm.X, mx, my)
 	if err != nil {
-		log.Fatalf("tileByMPos: could not get closest area: %s\n", err)
+		log.Print(err)
+		return
 	}
 
 	w := xwindow.New(wm.X, xwin)
