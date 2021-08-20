@@ -20,7 +20,8 @@
     <img src="https://img.shields.io/github/license/pedrobarco/prostokat"
          alt="LICENSE">
   </a>
-</p> <p align="center">
+</p>
+<p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#intro">Intro</a> •
   <a href="#install">Install</a> •
@@ -30,6 +31,8 @@
   <a href="#contribute">Contribute</a> •
   <a href="#license">License</a>
 </p>
+
+![screenshot](docs/assets/demo.gif)
 
 ## Key Features
 
